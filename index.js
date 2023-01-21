@@ -47,8 +47,28 @@ const cors= require("cors")
 app.use(cors({
     origin :"http://localhost:3000"
 }))
-const bcrypt = require ("bcryptjs")
-app.get("/users",async (req,res)=> {
+const bcrypt = require ("bcryptjs");
+const jwt = require ("jsonwebtoken");
+const { verify } = require("crypto");
+const { nextTick } = require("process");
+const SECRET ="ndkhfj5bji2xvsafkw2bjei9df2sdtgd4nb"
+
+const authorize = (req,res,next) => {
+    if (req.headers.authorization){
+        try {
+            const varify= jwt.verify(req.headers.authorization,SECRET);
+                if(verify){
+                    next();
+                }
+        }catch (error){
+            res.status(401).json({message:"Unauthorized"});
+        }
+    }else{
+        res.status(401).json({message:"Unauthorized"});
+    }
+}
+
+app.get("/users",authorize,async (req,res)=> {
     try{
         //connect mongoDB
         const connection = await mongoclient.connect(URL);
@@ -73,7 +93,7 @@ app.get("/users",async (req,res)=> {
     });
     
 // post method in nodejs
-  app.post("/user", async(req,res)=> 
+  app.post("/user", authorize,async(req,res)=> 
   { 
      /* const now=new Date();
     const year=now.getFullYear();
@@ -107,7 +127,7 @@ req.user.id=`${year}+${month}+${date}+${hour}+${minit}+${sec}`
     }
 });
 
-app.put("/user/:id",async (req,res) =>{
+app.put("/user/:id",authorize,async (req,res) =>{
     // put method in nodejs
 
     //const index=users.findIndex(o => o.id == req.params.id)
@@ -142,7 +162,7 @@ app.put("/user/:id",async (req,res) =>{
 
 })
 
-app.delete("/user/:id", async (req,res) => {
+app.delete("/user/:id",authorize, async (req,res) => {
     //nodejs method
     //const index=users.findIndex(o => o.id == req.params.id)
     //users.splice(index,1)
@@ -171,7 +191,7 @@ app.delete("/user/:id", async (req,res) => {
 });
 
 // find single user
-app.get("/users/:id",async (req,res)=> {
+app.get("/users/:id",authorize,async (req,res)=> {
 try{
         //connect mongoDB
         const connection = await mongoclient.connect(URL);
@@ -239,7 +259,10 @@ app.post("/login",async(req,res) =>{
             //check password
             const compare= await bcrypt.compare(req.body.password,user.password)
             if(compare){
-                res.json({message:"Correct"})
+                //generate token
+                const token = jwt.sign({id:user._id},SECRET,{expiresIn:300})
+                console.log(token);
+                res.json({message:"login success",token});
             }else{
                 res.json({message:"Email/Password is Wrong"})
             }
@@ -248,7 +271,7 @@ app.post("/login",async(req,res) =>{
         }
         //close connection
         await connection.close()
-        res.json({message:"user inserted"})
+        //res.json({message:"user inserted"})
         }catch(error){
             console.log(error);
             res.status(500).json({message:"Something went wrong"})
