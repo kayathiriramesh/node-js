@@ -4,35 +4,35 @@
 //2.Custom Packages
 //3.Third Party Packages
 
-const os=require("os");
-const OS=os.platform();
-console.log(OS);
+//const os=require("os");
+//const OS=os.platform();
+//console.log(OS);
 
-const platform= process.platform;
-const core=os.cpus();
-const uptime =os.uptime();
-const path=require("path")
-const dirname= path.dirname(__dirname);
-console.log(dirname)
+//const platform= process.platform;
+//const core=os.cpus();
+//const uptime =os.uptime();
+//const path=require("path")
+//const dirname= path.dirname(__dirname);
+//console.log(dirname)
 //absolute path  => C://project_name/floder_name/file_name
 // Relative path => ../../folder/file.js
-const fs=require ("fs")
-fs.writeFile("message.txt","Hello wprld",function(err){
-    console.log("File created successfully");
-});
-fs.readFile("./message.txt",{encoding:"utf-8"},function(err,data){
-if(err)throw err;
-console.log(data)
-})
+//const fs=require ("fs")
+//fs.writeFile("message.txt","Hello wprld",function(err){
+  //  console.log("File created successfully");
+//});
+//fs.readFile("./message.txt",{encoding:"utf-8"},function(err,data){
+//if(err)throw err;
+//console.log(data)
+//})
 
-fs.readdir("./",function(err,list){
+{/*fs.readdir("./",function(err,list){
     console.log(list)
 })
 
 fs.watchFile("./message.txt",function(curr,prev){
     console.log(curr)
     console.log(prev)
-})
+}) */}
 
 
 
