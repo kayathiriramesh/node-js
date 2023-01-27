@@ -7,7 +7,7 @@ const URL="mongodb+srv://user:hztHmDTfkSGd1p4D@cluster0.mc3htnf.mongodb.net"
 const pizzas=[];
 const cors= require("cors")
 app.use(cors({
-    //origin :"http://localhost:3000"
+    origin :"http://localhost:3000"
 }))
 const bcrypt = require ("bcryptjs")
 
@@ -38,7 +38,6 @@ app.get("/pizzas",async (req,res)=> {
 // post method in nodejs
   app.post("/pizza", async(req,res)=> 
   { 
-    console.log("i am");
      /* const now=new Date();
     const year=now.getFullYear();
     const month=now.getMonth() + 1;

@@ -54,9 +54,11 @@ const { nextTick } = require("process");
 const SECRET ="ndkhfj5bji2xvsafkw2bjei9df2sdtgd4nb"
 
 const authorize = (req,res,next) => {
-    if (req.headers.authorization){
+     if (req.headers.authorization){
         try {
-            const varify= jwt.verify(req.headers.authorization,SECRET);
+            let token=req.headers.authorization.split(" ")[1];
+            //authorization ah split panni antha array la [1] value ah assign panrom
+            const verify= jwt.verify(token,'ndkhfj5bji2xvsafkw2bjei9df2sdtgd4nb');
                 if(verify){
                     next();
                 }
@@ -260,7 +262,7 @@ app.post("/login",async(req,res) =>{
             const compare= await bcrypt.compare(req.body.password,user.password)
             if(compare){
                 //generate token
-                const token = jwt.sign({id:user._id},SECRET,{expiresIn:300})
+                const token = jwt.sign({id:user._id},SECRET,{expiresIn: "1h"})
                 console.log(token);
                 res.json({message:"login success",token});
             }else{
