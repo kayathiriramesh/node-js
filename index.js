@@ -48,7 +48,7 @@ const users=[];
 
 //const cors= require("cors")
 app.use(cors({
-    origin :"http://localhost:3000"
+    origin :["http://localhost:3000","https://fastidious-rugelach-cd1426.netlify.app"]
 }))
 const bcrypt = require ("bcryptjs");
 const jwt = require ("jsonwebtoken");
