@@ -40,11 +40,13 @@ const express=require("express")
 const mongodb=require("mongodb")
 const app= express()
 app.use(express.json())
-const dotEnv= require("dotenv").config();
+require('dotenv').config()
+//const dotEvn=requrie("dotevn").config();
 const mongoclient= mongodb.MongoClient;
 const URL=process.env.DB;
 const users=[];
-const cors= require("cors")
+
+//const cors= require("cors")
 app.use(cors({
     origin :"http://localhost:3000"
 }))
