@@ -40,8 +40,9 @@ const express=require("express")
 const mongodb=require("mongodb")
 const app= express()
 app.use(express.json())
+const dotEnv= require("dotenv").config();
 const mongoclient= mongodb.MongoClient;
-const URL="mongodb+srv://user:hztHmDTfkSGd1p4D@cluster0.mc3htnf.mongodb.net"
+const URL=process.env.DB;
 const users=[];
 const cors= require("cors")
 app.use(cors({
