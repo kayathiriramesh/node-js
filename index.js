@@ -193,7 +193,7 @@ app.delete("/user/:id",authorize, async (req,res) => {
 });
 
 // find single user
-app.get("/users/:id",authorize,async (req,res)=> {
+app.get("/user/:id",authorize,async (req,res)=> {
 try{
         //connect mongoDB
         const connection = await mongoclient.connect(URL);
